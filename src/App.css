@@ -1,0 +1,5 @@
+.custom-paint-style {
+  border-radius: 0 60% 40% 0;
+  box-shadow: -10px 20px 0px rgba(255, 255, 255, 0.08);
+  filter: grayscale(10%) contrast(110%);
+}

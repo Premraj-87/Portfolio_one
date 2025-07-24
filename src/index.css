@@ -1,0 +1,21 @@
+@import "tailwindcss";
+html, body {
+  scroll-behavior: smooth;
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px #6ec1e4, 0 0 10px #6ec1e4;
+  }
+  100% {
+    text-shadow: 0 0 10px #6ec1e4, 0 0 20px #6ec1e4;
+  }
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.animate-glow-soft {
+  animation: glow 3s ease-in-out infinite alternate;
+}
