@@ -1,4 +1,8 @@
-# React + Vite
+# Portfolio_one
+
+My personal portfolio website built with React + Vite for experimental and showcase purposes.
+
+## Tech Stack
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
