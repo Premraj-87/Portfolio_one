@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import { Link } from "react-scroll";
-import myPhoto from "../assets/profile.jpg";
+import myPhoto from "../assets/profile.png";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import { useCallback } from "react";
