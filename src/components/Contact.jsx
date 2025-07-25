@@ -11,6 +11,8 @@ const Contact = () => {
     message: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -20,18 +22,32 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
+    // Basic client-side validation
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      toast.error("Please fill in all fields.");
+      setIsLoading(false);
+      return;
+    }
 
     try {
-     const res = await axios.post("https://portfolio-backend.onrender.com/send", formData);
+      const res = await axios.post("https://portfolio-backend.onrender.com/send", formData);
       if (res.data.success) {
-        toast.success("Message sent successfully!");
+        toast.success("Message sent successfully! I'll get back to you soon.");
         setFormData({ name: "", email: "", message: "" });
       } else {
-        toast.error("Something went wrong. Try again.");
+        toast.error(res.data.message || "Something went wrong. Please try again.");
       }
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to send. Server error.");
+      console.error("Contact form error:", err);
+      if (err.response?.data?.message) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error("Failed to send message. Please try again later.");
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -48,15 +64,15 @@ const Contact = () => {
           <div className="space-y-6">
             <div className="flex items-center gap-4 hover:text-green-400 transition">
               <FaEnvelope className="text-xl" />
-              <a href="mailto:example@email.com">example@email.com</a>
+              <a href="mailto:premrajanand87@gmail.com">premrajanand87@gmail.com</a>
             </div>
             <div className="flex items-center gap-4 hover:text-green-400 transition">
               <FaLinkedin className="text-xl" />
-              <a href="https://linkedin.com" target="_blank">LinkedIn Profile</a>
+              <a href="https://linkedin.com/in/premraj-87" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>
             </div>
             <div className="flex items-center gap-4 hover:text-green-400 transition">
               <FaInstagram className="text-xl" />
-              <a href="https://instagram.com" target="_blank">Instagram Profile</a>
+              <a href="https://instagram.com/prem_raj_anand" target="_blank" rel="noopener noreferrer">Instagram Profile</a>
             </div>
           </div>
         </div>
@@ -98,9 +114,14 @@ const Contact = () => {
 
           <button
             type="submit"
-            className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded w-full transition"
+            disabled={isLoading}
+            className={`w-full px-6 py-3 rounded transition ${
+              isLoading 
+                ? 'bg-gray-600 cursor-not-allowed' 
+                : 'bg-green-600 hover:bg-green-700'
+            } text-white`}
           >
-            Send Message
+            {isLoading ? "Sending..." : "Send Message"}
           </button>
         </form>
       </div>
